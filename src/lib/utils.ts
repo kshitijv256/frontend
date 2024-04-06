@@ -1,3 +1,7 @@
+import routes from "@/api/routes";
+import { PostAssignedModel } from "@/components/posts/models";
+import { API_ENDPOINT, LocalStorageKeys } from "@/config/constants";
+import axios from "axios";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -21,5 +25,28 @@ export const getImageRatio = (media?: string) => {
     return 9 / 16;
   } else {
     return 3 / 2; // default ratio
+  }
+};
+
+export const likeUnlikePost = async (
+  postId: string,
+): Promise<PostAssignedModel | undefined> => {
+  try {
+    const response = await axios.post(
+      API_ENDPOINT + routes.likePost.path,
+      {
+        postId: postId,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(LocalStorageKeys.accessToken)}`,
+        },
+      },
+    );
+    return {
+      ...response.data.Post,
+    } as PostAssignedModel;
+  } catch (error) {
+    console.error(error);
   }
 };

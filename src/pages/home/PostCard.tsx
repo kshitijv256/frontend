@@ -11,36 +11,44 @@ import { CommentUserAssignedModel } from "@/components/comments/models";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { DefaultUserImage } from "@/constants";
-import { getImageRatio } from "@/lib/utils";
+import { getImageRatio, likeUnlikePost } from "@/lib/utils";
 import { getAISummary } from "@/utils/axiosRequest";
 import Loader from "@/components/common/Loader";
+import { useAuthProvider } from "@/providers/authProvider";
 
 const PostCard = (props: {
   post: PostAssignedModel;
   isIndividual?: boolean;
 }) => {
   const { post } = props;
+  const { user } = useAuthProvider();
+  const [postState, setPostState] = useState<PostAssignedModel>(post);
   const [comments, setComments] = useState<CommentUserAssignedModel[]>(
-    post.comments,
+    postState.comments,
   );
   const [imageRatio, setImageRatio] = useState<number | undefined>(3 / 2);
 
   useEffect(() => {
-    setImageRatio(getImageRatio(post.media));
-  }, [post.media]);
+    setImageRatio(getImageRatio(postState.media));
+  }, [postState.media]);
 
   const PostMeta = [
     {
       icon: Heart,
       name: "likes",
-      iconClass: "hover:fill-red-900 dark:hover:fill-red-500",
-      count: post._count.likes,
+      iconClass: `hover:fill-red-900 ${postState.likes.map((like) => (like.userId === user?.id ? "fill-red-900 dark:fill-red-500" : ""))}`,
+      onIconClick: async () => {
+        const res = await likeUnlikePost(postState.id);
+        setPostState(res!);
+      },
+      count: postState._count.likes,
     },
     {
       icon: MessageSquare,
       name: "comments",
       iconClass: "hover:fill-gray-300 dark:hover:fill-gray-500",
-      count: post._count.comments,
+      onIconClick: () => {},
+      count: postState._count.comments,
     },
   ];
 
@@ -49,35 +57,37 @@ const PostCard = (props: {
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <Avatar>
-            <AvatarImage src={post.Author.profilePicture || DefaultUserImage} />
+            <AvatarImage
+              src={postState.Author.profilePicture || DefaultUserImage}
+            />
           </Avatar>
-          <p>{post.Author.username}</p>
+          <p>{postState.Author.username}</p>
         </div>
         <div className="flex items-center gap-2">
           <p className="tooltip">
             {
-              getRelativeTimeOrFormattedDateTime(post.createdAt)
+              getRelativeTimeOrFormattedDateTime(postState.createdAt)
                 .relativeDateTime
             }
             <span className="tooltip-text">
               {
-                getRelativeTimeOrFormattedDateTime(post.createdAt)
+                getRelativeTimeOrFormattedDateTime(postState.createdAt)
                   .formattedDateTime
               }
             </span>
           </p>
-          <PostSettingsPopover {...post} />
+          <PostSettingsPopover {...postState} />
         </div>
       </div>
-      <Link to={`/post/${post.id}`} className="flex flex-col gap-2">
-        <p className="font-bold">{post.title}</p>
-        <p>{post.content}</p>
+      <Link to={`/post/${postState.id}`} className="flex flex-col gap-2">
+        <p className="font-bold">{postState.title}</p>
+        <p>{postState.content}</p>
       </Link>
-      {post.media && (
-        <Link to={`/post/${post.id}`}>
+      {postState.media && (
+        <Link to={`/post/${postState.id}`}>
           <AspectRatio ratio={imageRatio}>
             <img
-              src={post.media}
+              src={postState.media}
               alt="Post"
               className="h-full w-full rounded-xl object-cover"
             />
@@ -85,16 +95,21 @@ const PostCard = (props: {
         </Link>
       )}
       <div>
-        <AIExplanation postId={post.id} />
+        <AIExplanation postId={postState.id} />
       </div>
       <Separator className="my-2" />
-      <Link to={`/post/${post.id}`} className="flex items-center gap-2">
+      <Link to={`/post/${postState.id}`} className="flex items-center gap-2">
         {PostMeta.map((meta, index) => (
           <div
             key={index}
             className="flex cursor-pointer items-center gap-2 rounded-md bg-gray-100 p-1 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
           >
-            <meta.icon strokeWidth={0.5} size={24} className={meta.iconClass} />
+            <meta.icon
+              strokeWidth={0.5}
+              size={24}
+              className={meta.iconClass}
+              onClick={meta.onIconClick}
+            />
             <p className="hover:underline">
               {meta.count} {meta.name}
             </p>
@@ -103,7 +118,7 @@ const PostCard = (props: {
       </Link>
       <Separator className="my-2" />
       <PostComment
-        post={post}
+        post={postState}
         onComment={(comment: CommentUserAssignedModel) => {
           setComments((prev) => [comment, ...prev]);
         }}
@@ -112,12 +127,12 @@ const PostCard = (props: {
         <CommentCard key={index} {...comment} />
       ))}
       <div className="flex items-center gap-2">
-        {post.comments.length === 1 && post._count.comments > 1 && (
+        {postState.comments.length === 1 && postState._count.comments > 1 && (
           <Link
-            to={`/post/${post.id}`}
+            to={`/post/${postState.id}`}
             className="cursor-pointer text-sm text-gray-600 hover:underline dark:text-gray-400"
           >
-            View all {post._count.comments} comments
+            View all {postState._count.comments} comments
           </Link>
         )}
       </div>

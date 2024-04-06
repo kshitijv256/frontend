@@ -1,0 +1,23 @@
+{
+  "translation": {
+    "sign-in": "Sign in",
+    "sign-out": "Sign out",
+    "sign-up": "Sign up",
+    "peer": "Peer",
+    "pulse": "Pulse",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "toggle-theme": "Toggle theme",
+    "welcome-back": "Welcome back",
+    "welcome-to-peer-pulse": "Welcome to Peer Pulse",
+    "today-date": "Today's date {{date, shortDate}}",
+    "right-now": "Right now it's {{time, longTime}}",
+    "enter-credential-create-account": "Enter your credentials to create an account",
+    "enter-credential-access-account": "Enter your credentials to access your account",
+    "email": "Email",
+    "password": "Password",
+    "username": "Username",
+    "homepage": "Homepage"
+  }
+}

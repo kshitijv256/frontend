@@ -1,0 +1,23 @@
+{
+  "translation": {
+    "sign-in": "साइन इन करें",
+    "sign-out": "साइन आउट करें",
+    "sign-up": "साइन अप करें",
+    "peer": "पीयर",
+    "pulse": "पल्स",
+    "light": "रोशनी",
+    "dark": "अंधेरा",
+    "system": "सिस्टम",
+    "toggle-theme": "थीम बदले",
+    "welcome-back": "वापसी पर स्वागत है",
+    "welcome-to-peer-pulse": "पीयर पल्स में आपका स्वागत है",
+    "today-date": "आज की तारीख है {{date, shortDate}}",
+    "right-now": "अभी समय है {{time, longTime}}",
+    "enter-credential-create-account": "खाता बनाने के लिए अपना विवरण दर्ज करें",
+    "enter-credential-access-account": "अपने खाते तक पहुंचने के लिए अपना विवरण दर्ज करें",
+    "email": "ईमेल",
+    "password": "पासवर्ड",
+    "username": "उपयोगकर्ता नाम",
+    "homepage": "मुखपृष्ठ"
+  }
+}

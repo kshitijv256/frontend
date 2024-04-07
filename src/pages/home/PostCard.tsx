@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { DefaultUserImage } from "@/constants";
 import { getImageRatio, likeUnlikePost } from "@/lib/utils";
-import { getAISummary } from "@/utils/axiosRequest";
+import { getAISummary, getHindiTranslation } from "@/utils/axiosRequest";
 import Loader from "@/components/common/Loader";
 import { useAuthProvider } from "@/providers/authProvider";
 
@@ -96,6 +96,7 @@ const PostCard = (props: {
       )}
       <div>
         <AIExplanation postId={postState.id} />
+        <HindiTranslation postId={postState.id} />
       </div>
       <Separator className="my-2" />
       <Link to={`/post/${postState.id}`} className="flex items-center gap-2">
@@ -186,6 +187,58 @@ const AIExplanation = (props: { postId: string }) => {
             }}
           />
           <p className="mt-2 text-sm">{aiExplanation}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const HindiTranslation = (props: { postId: string }) => {
+  const [hindiTranslation, setHindiTranslation] = useState<string | null>(null);
+  const [hindiTranslationLoading, setHindiTranslationLoading] = useState(false);
+
+  const getHindi = async () => {
+    try {
+      setHindiTranslationLoading(true);
+      setHindiTranslation(null);
+      const response = await getHindiTranslation(props.postId);
+      setHindiTranslation(response.explanation);
+    } catch (error) {
+      console.error("Error getting Hindi explanation:", error);
+      setHindiTranslation("Error getting Hindi explanation");
+    } finally {
+      setHindiTranslationLoading(false);
+    }
+  };
+
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="flex items-center justify-end gap-2 text-xs">
+        <Brain size={12} className="text-gray-600 dark:text-gray-400" />
+        <p
+          className="cursor-pointer text-gray-600 hover:underline dark:text-gray-400"
+          onClick={getHindi}
+        >
+          Get French Translation
+        </p>
+      </div>
+      <div
+        className={`relative rounded-xl bg-gray-100 p-2 dark:bg-gray-800 ${hindiTranslationLoading ? "block" : "hidden"}`}
+      >
+        <Loader />
+      </div>
+      <div
+        className={`relative rounded-xl bg-gray-100 p-2 dark:bg-gray-800 ${hindiTranslation ? "block" : "hidden"}`}
+      >
+        <div>
+          <XIcon
+            size={16}
+            className="absolute right-2 top-2 cursor-pointer"
+            onClick={() => {
+              setHindiTranslation(null);
+            }}
+          />
+          <p className="mt-2 text-sm">{hindiTranslation}</p>
         </div>
       </div>
     </div>

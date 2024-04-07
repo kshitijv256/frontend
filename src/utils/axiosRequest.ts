@@ -15,6 +15,19 @@ export const getAISummary = async (postId: string) => {
   return res.data;
 };
 
+export const getHindiTranslation = async (postId: string) => {
+  const res = await axios.post(
+    API_ENDPOINT + routes.getHindiExplanation.path,
+    { postId },
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem(LocalStorageKeys.accessToken)}`,
+      },
+    },
+  );
+  return res.data;
+};
+
 export const uploadImage = async (file: File): Promise<string | undefined> => {
   try {
     const res = await axios.post(API_ENDPOINT + routes.uploadMedia.path, file, {

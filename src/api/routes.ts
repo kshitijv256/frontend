@@ -118,6 +118,11 @@ const routes = {
     method: "GET",
     TRes: Type<string>(),
   },
+  getHindiExplanation: {
+    path: "/api/v1/post/hindi-translation",
+    method: "GET",
+    TRes: Type<string>(),
+  },
   updateUser: {
     path: "/api/v1/user/update",
     method: "PUT",

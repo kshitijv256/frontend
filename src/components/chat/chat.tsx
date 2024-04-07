@@ -2,11 +2,32 @@ import { useAuthProvider } from "@/providers/authProvider";
 import AllChat from "./components/allChat";
 import Window from "./components/window";
 import { MessageSquareDiffIcon } from "lucide-react";
+import { API_ENDPOINT, LocalStorageKeys } from "@/config/constants";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function Chat() {
-  const to = "1";
+  const [users, setUsers] = useState([]);
+  const [to,setTo]=useState("");
+  // const [username,setUserName]=useState("");
+  // const to = "1";
   const user = useAuthProvider();
   console.log("user", user);
+
+  const getAllUsers = async () => {
+    const response = await axios.get(API_ENDPOINT + "/allusers", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem(LocalStorageKeys.accessToken)}`,
+      },
+    });
+    const data = response.data;
+    console.log(data);
+    setUsers(data);
+  };
+
+  useEffect(() => {
+    getAllUsers();
+  }, []);
 
   return (
     <div className="flex h-screen w-full items-center justify-center">
@@ -17,10 +38,10 @@ export default function Chat() {
             <MessageSquareDiffIcon />
           </button>
         </div>
-        <AllChat />
+        <AllChat users={users} setTo={setTo}/>
       </div>
       <div className="flex h-screen w-full bg-gray-100 dark:bg-gray-900">
-        <Window to={to} from={user.user?.id ?? ""} message={""} />
+        {(to!=null)&&<Window to={to} from={user.user?.id ?? ""} message={""}/>}
       </div>
     </div>
   );

@@ -1,9 +1,11 @@
+import { UserModel } from "@/components/users/models";
 import { API_ENDPOINT } from "@/config/constants";
 
 export interface messages {
   to: string;
   from: string;
   message: string;
+  user?: UserModel;
   time?: string;
 }
 

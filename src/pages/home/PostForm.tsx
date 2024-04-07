@@ -14,7 +14,8 @@ import { getAISuggestion, uploadImage } from "@/utils/axiosRequest";
 import { postFormSchema } from "@/validation/post.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { Brain, Loader, XIcon } from "lucide-react";
+import { Brain, XIcon } from "lucide-react";
+import Loader from "@/components/common/Loader";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -23,12 +24,12 @@ const AIExplanation = (props: { keywords: string }) => {
   const [aiExplanation, setAiExplanation] = useState<string | null>(null);
   const [aiExplanationLoading, setAiExplanationLoading] = useState(false);
 
-  const getAiExplanation = async () => {
+  const getAiPostSuggest = async () => {
     try {
       setAiExplanationLoading(true);
       setAiExplanation(null);
       const response = await getAISuggestion(props.keywords);
-      setAiExplanation(response.explanation);
+      setAiExplanation(response.suggestion);
     } catch (error) {
       console.error("Error getting AI explanation:", error);
       setAiExplanation("Error getting AI explanation");
@@ -43,9 +44,9 @@ const AIExplanation = (props: { keywords: string }) => {
         <Brain size={12} className="text-gray-600 dark:text-gray-400" />
         <p
           className="cursor-pointer text-gray-600 hover:underline dark:text-gray-400"
-          onClick={getAiExplanation}
+          onClick={getAiPostSuggest}
         >
-          Get AI Explanation
+          Get AI Suggestion
         </p>
       </div>
       <div

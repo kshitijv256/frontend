@@ -5,9 +5,11 @@ import Posts from "./Posts";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { API_ENDPOINT, LocalStorageKeys } from "@/config/constants";
+import UsersList from "./UsersList";
+import { UserModel } from "@/components/users/models";
 
 const Home = () => {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<UserModel[] | undefined>([]);
   const { user } = useAuthProvider();
 
   const getAllUsers = async () => {
@@ -27,15 +29,11 @@ const Home = () => {
   return (
     <div>
       {user && !user.isEmailVerified && <UnverifiedEmailAlert />}
-      <div className="grid h-full grid-cols-2 md:grid-cols-4">
+      <div className="grid h-full grid-cols-2 p-5 md:grid-cols-4">
         <div className="col-span-1 hidden rounded-l-md  md:block">
-          <p className="pl-2 pt-2 text-xl font-bold text-amber-500">
-            Active Users
-          </p>
-          <div className="flex flex-col gap-4 p-4 text-lg text-black">
-            {users.map((user) => (
-              <div key={user.id}>{user.username}</div>
-            ))}
+          <p className="text-xl font-bold text-amber-500">Active Users</p>
+          <div className="flex flex-col gap-4 p-4 text-black">
+            <UsersList users={users} />
           </div>
         </div>
         <div className="col-span-2 flex flex-col gap-5">

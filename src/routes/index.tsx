@@ -29,6 +29,7 @@ const router = sentryCreateBrowserRouter([
         path: "/post/:id",
         element: <Post />,
       },
+      { path: "/chat", element: <Chat /> },
     ],
   },
   {
@@ -38,8 +39,6 @@ const router = sentryCreateBrowserRouter([
   { path: "/sign-in", element: <SignIn /> },
   { path: "/sign-up", element: <SignUp /> },
   { path: "/logout", element: <Logout /> },
-  {path:"/chat",element:<Chat/>},
-
 ]);
 
 export default router;

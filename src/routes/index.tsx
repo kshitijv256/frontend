@@ -9,6 +9,7 @@ import Logout from "@/pages/logout";
 import ProtectedRoute from "./ProtectedRoute";
 import Post from "@/pages/post/[id]";
 import Profile from "@/pages/profile";
+import Chat from "@/components/chat/chat";
 
 const sentryCreateBrowserRouter =
   Sentry.wrapCreateBrowserRouter(createBrowserRouter);
@@ -37,6 +38,8 @@ const router = sentryCreateBrowserRouter([
   { path: "/sign-in", element: <SignIn /> },
   { path: "/sign-up", element: <SignUp /> },
   { path: "/logout", element: <Logout /> },
+  {path:"/chat",element:<Chat/>},
+
 ]);
 
 export default router;

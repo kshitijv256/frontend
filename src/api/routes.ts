@@ -118,6 +118,11 @@ const routes = {
     method: "GET",
     TRes: Type<string>(),
   },
+  getPostSuggestion: {
+    path: "/api/v1/post/suggestion",
+    method: "GET",
+    TRes: Type<string>(),
+  },
   getHindiExplanation: {
     path: "/api/v1/post/hindi-translation",
     method: "GET",

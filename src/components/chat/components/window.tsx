@@ -3,6 +3,7 @@ import Sent from "./sent";
 import Recieved from "./recieved";
 import { FormEvent, useEffect, useState } from "react";
 import { messages, sendMessage } from "../functions/reducer";
+import { API_ENDPOINT } from "@/config/constants";
 
 
 interface conversation{
@@ -32,9 +33,7 @@ export default function Window(conversation: messages) {
   };
 
   const getMessages = async () => {
-    const response = await fetch(
-      `http://localhost:5000/messages?to=${conversation.to}&from=${conversation.from}`,
-    );
+    const response = await fetch(API_ENDPOINT + "/messages");
     const data = await response.json();
     var list:conversation[]=[];
     data.map((value:conversation)=>{

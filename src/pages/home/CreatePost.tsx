@@ -13,7 +13,7 @@ export const CreatePost = () => {
   const { user } = useAuthProvider();
   return (
     <Dialog>
-      <DialogTrigger className="flex w-full cursor-pointer items-center gap-2 rounded-md bg-white p-3 transition-colors duration-200 ease-in-out hover:bg-gray-100 dark:bg-black">
+      <DialogTrigger className="flex w-full cursor-pointer items-center gap-2 rounded-lg bg-white p-3 transition-colors duration-200 ease-in-out hover:bg-gray-100 dark:bg-slate-800">
         <Avatar>
           <AvatarImage src={user?.profilePicture || DefaultUserImage} />
         </Avatar>

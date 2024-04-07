@@ -15,6 +15,19 @@ export const getAISummary = async (postId: string) => {
   return res.data;
 };
 
+export const getAISuggestion = async (keywords: string) => {
+  const res = await axios.post(
+    API_ENDPOINT + routes.getPostSuggestion.path,
+    { keywords },
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem(LocalStorageKeys.accessToken)}`,
+      },
+    },
+  );
+  return res.data;
+};
+
 export const getHindiTranslation = async (postId: string) => {
   const res = await axios.post(
     API_ENDPOINT + routes.getHindiExplanation.path,

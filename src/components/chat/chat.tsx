@@ -8,7 +8,7 @@ import axios from "axios";
 
 export default function Chat() {
   const [users, setUsers] = useState([]);
-  const [to,setTo]=useState("");
+  const [to, setTo] = useState("");
   // const [username,setUserName]=useState("");
   // const to = "1";
   const user = useAuthProvider();
@@ -38,10 +38,10 @@ export default function Chat() {
             <MessageSquareDiffIcon />
           </button>
         </div>
-        <AllChat users={users} setTo={setTo}/>
+        <AllChat users={users} setTo={setTo} />
       </div>
       <div className="flex h-screen w-full bg-gray-100 dark:bg-gray-900">
-        {(to!=null)&&<Window to={to} from={user.user?.id ?? ""} message={""}/>}
+        <Window to={to} from={user.user?.id ?? ""} message={""} />
       </div>
     </div>
   );

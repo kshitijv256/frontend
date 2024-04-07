@@ -30,10 +30,10 @@ const Posts = () => {
   }, []);
 
   return (
-    <div className="flex w-full flex-col gap-5 rounded-md bg-white text-sm transition-colors duration-200 ease-in-out hover:bg-gray-100 dark:bg-black">
+    <div className="flex w-full flex-col gap-5 rounded-md bg-white text-sm transition-colors duration-200 ease-in-out dark:bg-black">
       {posts &&
         posts.map((post, index) => (
-          <div key={index} className="bg-gray-200">
+          <div key={index} className="">
             {post.PostType === "POST" ? (
               <PostCard post={post} isIndividual={false} />
             ) : (

@@ -53,7 +53,7 @@ const PostCard = (props: {
   ];
 
   return (
-    <div className="flex w-full flex-col gap-2 rounded-xl border border-gray-200 bg-white p-3 shadow-md dark:bg-black">
+    <div className="flex w-full flex-col gap-2 rounded-xl bg-white p-3 shadow-md dark:bg-black">
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <Avatar>
@@ -61,7 +61,7 @@ const PostCard = (props: {
               src={postState.Author.profilePicture || DefaultUserImage}
             />
           </Avatar>
-          <p>{postState.Author.username}</p>
+          <p className="text-lg text-slate-600">{postState.Author.username}</p>
         </div>
         <div className="flex items-center gap-2">
           <p className="tooltip">
@@ -80,8 +80,8 @@ const PostCard = (props: {
         </div>
       </div>
       <Link to={`/post/${postState.id}`} className="flex flex-col gap-2">
-        <p className="font-bold">{postState.title}</p>
-        <p>{postState.content}</p>
+        <p className="text-lg font-bold">{postState.title}</p>
+        <p className="">&emsp;{postState.content}</p>
       </Link>
       {postState.media && (
         <Link to={`/post/${postState.id}`}>
@@ -96,7 +96,7 @@ const PostCard = (props: {
       )}
       <div>
         <AIExplanation postId={postState.id} />
-        <HindiTranslation postId={postState.id} />
+        {/* <HindiTranslation postId={postState.id} /> */}
       </div>
       <Separator className="my-2" />
       <Link to={`/post/${postState.id}`} className="flex items-center gap-2">

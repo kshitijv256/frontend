@@ -77,7 +77,7 @@ const PostComment = (props: {
                 </FormItem>
               )}
             />
-            <Button type="submit" size="sm" variant="default">
+            <Button type="submit" size="sm" variant="default" className="h-10">
               Comment
             </Button>
           </form>

@@ -44,7 +44,7 @@ const AuthPageLayout = ({
     checkLoggedIn();
   }, [navigate]);
   return (
-    <div className="mx-auto grid grid-cols-1 bg-gray-950 md:h-screen md:grid-cols-2">
+    <div className="mx-auto grid grid-cols-1 bg-amber-700 md:h-screen md:grid-cols-2">
       {error && (
         <div className="bg-red-500 p-3 text-center text-white">
           {error}
@@ -52,8 +52,8 @@ const AuthPageLayout = ({
         </div>
       )}
       {isLoading && <div>Loading...</div>}
-      <div className="flex px-5 py-3 text-4xl font-bold text-white md:px-10 md:py-5">
-        <p className="font-bold text-blue-600">{t("peer")}</p>
+      <div className="flex px-5 py-3 text-5xl font-bold text-white md:px-10 md:py-5">
+        <p className="font-bold text-amber-500">{t("peer")}</p>
         <p className="font-bold text-white">{t("pulse")}</p>
       </div>
       <div className="flex flex-col bg-white">
@@ -67,7 +67,7 @@ const AuthPageLayout = ({
           </Button>
           <LanguageModeToggle />
         </div>
-        <div className="flex h-full w-full flex-col items-center justify-center gap-5">
+        <div className="flex h-full w-full flex-col items-center justify-center gap-5 text-black">
           <div className="px-5 text-center">
             <h1 className="text-3xl font-bold">{title}</h1>
             <p className="text-sm">{subTitle}</p>
